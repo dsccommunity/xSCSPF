@@ -26,4 +26,3 @@ class MSFT_xSCSPFServerSetup : OMI_BaseResource
     [Write, Description("Administrator of the Provider application pool")] String ProviderSecurityGroupUsers;
     [Write, Description("Administrator of the Usage application pool")] String UsageSecurityGroupUsers;
 };
-

@@ -95,7 +95,16 @@ function Get-TargetResource
     if(Get-WmiObject -Class Win32_Product | Where-Object {$_.IdentifyingNumber -eq $IdentifyingNumber})
     {
         $DatabaseServer = (Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Service Provider Foundation" -Name "DatabaseServer").DatabaseServer
-        $DatabasePortNumber = (Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Service Provider Foundation" -Name "DatabasePort").DatabasePort
+        
+        $DatabasePort = (Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Service Provider Foundation" -Name "DatabasePort").DatabasePort
+        if($DatabasePort -eq -1)
+        {
+            $DatabasePortNumber = 0
+        }
+        else
+        {
+            $DatabasePortNumber = $DatabasePort
+        }
         $DatabaseName = (Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Service Provider Foundation" -Name "DatabaseName").DatabaseName
         $WebSitePortNumber = (Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Service Provider Foundation" -Name "PortNumber").PortNumber
         $SCVMMUsername = (Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Service Provider Foundation\VMM" -Name "AppPoolDomain").AppPoolDomain + "\" + (Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Service Provider Foundation\VMM" -Name "AppPoolUserName").AppPoolUserName
@@ -479,4 +488,3 @@ function Test-TargetResource
 
 
 Export-ModuleMember -Function *-TargetResource
-
