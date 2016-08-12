@@ -1,5 +1,9 @@
 #requires -Version 5
 
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingConvertToSecureStringWithPlainText', '')]
+param
+()
+
 Configuration SPF
 {
     Import-DscResource -Module xSQLServer
